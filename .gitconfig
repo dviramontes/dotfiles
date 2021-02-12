@@ -1,0 +1,20 @@
+[user]
+	name = user
+	email = user@mail.com
+[color]
+	ui = true
+[core]
+	editor = emacs
+	excludesfile = /Users/$HOME/.gitignore
+[alias]
+	co = checkout
+	cm = commit
+	s  = status
+	b  = branch
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+	up = push origin HEAD
+	
+[init]
+	defaultBranch = main
