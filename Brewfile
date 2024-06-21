@@ -1,10 +1,6 @@
-# Taps
-tap "homebrew/cask"
-tap "homebrew/core"
-tap "homebrew/bundle"
-
 # Browsers
 cask "google-chrome"
+cask "chromedriver"
 
 # Terminal
 cask "iterm2"
@@ -15,9 +11,11 @@ brew "ripgrep"
 brew "z"
 brew "fzd"
 brew "asdf"
+brew "just"
+brew "protobuf"
 
 # Databases
-brew "postgresql"
+brew "postgresql@14", restart_service: true, link: true
 
 # Text editors
 cask "zed"
@@ -42,3 +40,10 @@ brew "ollama"
 # Fonts
 brew "font-hack-nerd-font"
 brew "font-fira-mono"
+
+# Erlang build tools
+brew "autoconf"
+brew "automake"
+brew "libtool"
+brew "wxwidgets"
+brew "openssl@1.1"
