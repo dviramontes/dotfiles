@@ -13,6 +13,20 @@ brew "fzd"
 brew "asdf"
 brew "just"
 brew "protobuf"
+brew "tldr"
+brew "docker"
+brew "jq"
+brew "shellcheck"
+brew "httpie"
+brew "neovim"
+brew "bat"
+brew "watch"
+
+# CI tools
+brew "act"
+
+# Data Processing
+brew "redpanda-data/tap/redpanda"
 
 # Databases
 brew "postgresql@14", restart_service: true, link: true
