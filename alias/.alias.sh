@@ -1,12 +1,16 @@
 # Aliases
-alias lzd="lazydocker"
+# -------
+
 alias zshedit="vim ~/.zshrc"
-alias kcd="kubectx"
-alias kns="kubens"
 alias j="just"
+alias cat="bat --paging=never"
+alias ls="eza"
 
 # Editor
 alias vim="nvim"
+alias lg="lazygit"
+alias ld="lazydocker"
+alias wf="windsurf"
 
 # Elixir
 alias md="mix dialyzer --plt"
@@ -30,4 +34,6 @@ alias zz='idea $(fzf -m --preview="bat --color=always {}")'
 
 # k8s
 alias k="kubectl"
+alias kns="kubens"
+alias kcd="kubectx"
 alias kns="kubens"

@@ -1,6 +1,8 @@
-# Browsers
+# Browsers and tools
 cask "google-chrome"
 cask "chromedriver"
+cask "firefox"
+cask "claude"
 
 # Terminal
 cask "iterm2"
@@ -9,7 +11,7 @@ cask "iterm2"
 brew "git"
 brew "ripgrep"
 brew "z"
-brew "fzd"
+brew "fzf"
 brew "asdf"
 brew "just"
 brew "protobuf"
@@ -20,16 +22,16 @@ brew "shellcheck"
 brew "httpie"
 brew "neovim"
 brew "bat"
+brew "eza"
 brew "watch"
-
-# CI tools
-brew "act"
+brew "gh"
+brew "stow"
 
 # Data Processing
 brew "redpanda-data/tap/redpanda"
 
 # Databases
-brew "postgresql@14", restart_service: true, link: true
+brew "postgresql@16", restart_service: true, link: true
 
 # Text editors
 cask "zed"
@@ -41,6 +43,7 @@ cask "clipy"
 
 # Communication
 cask "slack"
+cask "discord"
 
 # Media
 cask "spotify"

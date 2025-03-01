@@ -1,11 +1,11 @@
 [user]
-	name = user
-	email = user@mail.com
+	name = David Viramontes
+	email = diramontes@gmail.com
 [color]
 	ui = true
 [core]
 	editor = emacs
-	excludesfile = /Users/$HOME/.gitignore
+	excludesfile = /Users/dv/.gitignore
 [alias]
 	co = checkout
 	cm = commit
@@ -15,6 +15,6 @@
 	type = cat-file -t
 	dump = cat-file -p
 	up = push origin HEAD
-	
+
 [init]
 	defaultBranch = main
