@@ -4,6 +4,7 @@ cask "chromedriver"
 cask "firefox"
 cask "claude"
 cask "handbrake"
+cask "vlc"
 
 # Terminal
 cask "iterm2"
