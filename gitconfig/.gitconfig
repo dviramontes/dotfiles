@@ -1,10 +1,10 @@
 [user]
-	name = David Viramontes
+	name = dviramontes
 	email = diramontes@gmail.com
 [color]
 	ui = true
 [core]
-	editor = emacs
+	editor = vim
 	excludesfile = /Users/dv/.gitignore
 [alias]
 	co = checkout

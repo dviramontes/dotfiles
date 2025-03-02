@@ -3,6 +3,7 @@ cask "google-chrome"
 cask "chromedriver"
 cask "firefox"
 cask "claude"
+cask "handbrake"
 
 # Terminal
 cask "iterm2"
@@ -26,6 +27,7 @@ brew "eza"
 brew "watch"
 brew "gh"
 brew "stow"
+brew "direnv"
 
 # Data Processing
 brew "redpanda-data/tap/redpanda"
