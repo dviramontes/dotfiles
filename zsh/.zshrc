@@ -1,11 +1,10 @@
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-ZSH_THEME="robbyrussell"
+# https://github.com/ohmyzsh/ohmyzsh/wiki/themes
+ZSH_THEME="afowler"
 
 plugins=(git asdf)
 
-source "$ZSH/oh-my-zsh.sh"
+# load ohmyzsh
+source "/$HOME/.oh-my-zsh/oh-my-zsh.sh"
 
 # z
 . /usr/local/etc/profile.d/z.sh
@@ -21,13 +20,12 @@ export NVM_DIR="$HOME/.nvm"
 # direnv
 eval "$(direnv hook zsh)"
 
+# load externals
 source ~/.alias.sh
 source ~/.secrets.sh
-
-# zsh
-alias zshedit="vim ~/.zshrc"
 
 # Paths
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.asdf/shims:$PATH"
 export PATH="/usr/local/opt/rustup/bin:$PATH"
+
