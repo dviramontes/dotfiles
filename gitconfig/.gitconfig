@@ -1,17 +1,16 @@
 [user]
-	name = dviramontes
+	name = David Viramontes
 	email = diramontes@gmail.com
 [color]
 	ui = true
 [core]
 	editor = vim
-	excludesfile = /Users/dv/.gitignore
+	excludesfile = $HOME/.gitignore
 [alias]
 	co = checkout
 	cm = commit
 	s  = status
 	b  = branch
-	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	type = cat-file -t
 	dump = cat-file -p
 	up = push origin HEAD
