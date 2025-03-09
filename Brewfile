@@ -29,6 +29,7 @@ brew "watch"
 brew "gh"
 brew "stow"
 brew "direnv"
+brew "uv"
 
 # Data Processing
 brew "redpanda-data/tap/redpanda"
