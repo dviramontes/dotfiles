@@ -5,7 +5,7 @@
 	ui = true
 [core]
 	editor = vim
-	excludesfile = $HOME/.gitignore
+	excludesfile = /Users/dv/.gitignore
 [alias]
 	co = checkout
 	cm = commit

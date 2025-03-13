@@ -12,13 +12,14 @@ Before you begin, ensure you have [Homebrew](https://brew.sh/) installed on your
 
 ## Installation
 
-### 1. Clone the repository
+### 1. Clone this repository
+
 ```bash
-git clone https://github.com/dviramontes/dotfiles.git
+git clone https://github.com/yourusername/dotfiles.git
 cd dotfiles
 ```
 
-### 2. Install packages from Brewfile
+### 3. Install packages from Brewfile
 
 The Brewfile includes browsers, development tools, utilities, and applications. To install everything in the Brewfile:
 
@@ -28,7 +29,7 @@ brew bundle
 
 This will install all the formulae, casks, and fonts specified in the Brewfile.
 
-### 3. Install dotfiles
+### 4. Install dotfiles 
 
 To use the dotfiles in this repository, use [GNU Stow](https://www.gnu.org/software/stow/):
 
@@ -57,7 +58,7 @@ GNU Stow creates symlinks from your dotfiles repository to your home directory. 
    ...
    ```
 
-   This will create a symlink `~/.zshrc` that points to `dotfiles/zsh/.zshrc` and so on for the other files.
+   This will create a symlink `~/.zshrc` that points to `dotfiles/zsh/.zshrc`.
 
 3. Verify the symlinks were created:
    ```bash
@@ -79,9 +80,4 @@ To update this repository with your latest configurations:
 ```bash
 # Update Brewfile with currently installed packages
 brew bundle dump --force
-
-# Commit and push your changes
-git add .
-git commit -m "Update dotfiles"
-git push
 ```
