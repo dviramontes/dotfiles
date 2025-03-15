@@ -4,10 +4,10 @@ ZSH_THEME="afowler"
 plugins=(git asdf)
 
 # load ohmyzsh
-source "/$HOME/.oh-my-zsh/oh-my-zsh.sh"
+source "$HOME/.oh-my-zsh/oh-my-zsh.sh"
 
 # z
-. /usr/local/etc/profile.d/z.sh
+. /opt/homebrew/etc/profile.d/z.sh
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
