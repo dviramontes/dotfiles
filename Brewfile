@@ -1,6 +1,8 @@
 tap "homebrew/bundle"
 tap "homebrew/services"
 tap "redpanda-data/tap"
+
+brew "hurl"
 brew "act"
 brew "asdf"
 brew "autoconf"
@@ -23,7 +25,7 @@ brew "libtool"
 brew "neovim"
 brew "nvm"
 brew "ollama"
-brew "postgresql@16", restart_service: :changed, link: true
+brew "postgresql@17", restart_service: :changed, link: true
 brew "protobuf"
 brew "ripgrep"
 brew "rustup"
