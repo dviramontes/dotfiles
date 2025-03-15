@@ -32,3 +32,6 @@ export PATH="/usr/local/opt/rustup/bin:$PATH"
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOBIN
+## asdf
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
