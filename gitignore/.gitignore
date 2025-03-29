@@ -12,6 +12,8 @@ Thumbs.db
 .vscode/
 *.sublime-project
 *.sublime-workspace
+*.iml
+.vscode
 
 # Logs and databases
 *.log
@@ -35,3 +37,9 @@ Thumbs.db
 *.rar
 *.tar
 *.zip
+
+# Platforms & language servers
+.java-version
+.elixir_ls
+.qodo
+.aider*

@@ -1,11 +1,11 @@
 [user]
 	name = David Viramontes
-	email = diramontes@gmail.com
+	email = dviramontes@gmail.com
 [color]
 	ui = true
 [core]
 	editor = vim
-	excludesfile = /Users/dv/.gitignore
+	excludesfile = /Users/davm/.gitignore
 [alias]
 	co = checkout
 	cm = commit
@@ -14,6 +14,15 @@
 	type = cat-file -t
 	dump = cat-file -p
 	up = push origin HEAD
-
+	bcd = branch --sort=-committerdate
+	bca = branch --sort=committerdate
+	cp = cherry-pick
+	yolo = !git commit -m \"$(curl -s https://whatthecommit.com/index.txt)\"
 [init]
 	defaultBranch = main
+[credential "https://github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/opt/homebrew/bin/gh auth git-credential
