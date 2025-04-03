@@ -4,7 +4,7 @@
 alias zshedit="vim ~/.zshrc"
 alias j="just"
 alias cat="bat --paging=never"
-alias ls="eza"
+alias ls="lsd"
 
 # Editor
 alias vim="nvim"
@@ -13,6 +13,9 @@ alias ld="lazydocker"
 alias wf="windsurf"
 
 # Elixir
+alias mtf="mix test.feature"
+alias mtu="mix test.unit"
+alias mca="mix check.all"
 alias md="mix dialyzer --plt"
 alias mt="mix test"
 alias mf="mix format"
