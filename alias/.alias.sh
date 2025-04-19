@@ -35,8 +35,9 @@ alias ..="cd .."
 # fzf find
 alias zz='idea $(fzf -m --preview="bat --color=always {}")'
 
-# k8s
+# k8s and infra
 alias k="kubectl"
 alias kns="kubens"
 alias kcd="kubectx"
 alias kns="kubens"
+alias tf="terraform"
