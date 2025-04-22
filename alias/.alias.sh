@@ -7,10 +7,12 @@ alias cat="bat --paging=never"
 alias ls="lsd"
 
 # Editor
+alias i="idea"
 alias vim="nvim"
 alias lg="lazygit"
 alias ld="lazydocker"
 alias wf="windsurf"
+alias cr="cr"
 
 # Elixir
 alias mtf="mix test.feature"
