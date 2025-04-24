@@ -17,7 +17,7 @@
 	bcd = branch --sort=-committerdate
 	bca = branch --sort=committerdate
 	cp = cherry-pick
-	yolo = !git commit -m \"$(curl -s https://whatthecommit.com/index.txt)\"
+	can = commit --amend --no-edit
 [init]
 	defaultBranch = main
 [credential "https://github.com"]
