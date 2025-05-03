@@ -5,7 +5,7 @@
 	ui = true
 [core]
 	editor = vim
-	excludesfile = /Users/dv/.gitignore
+	excludesFile = ~/.gitignore
 [alias]
 	co = checkout
 	cm = commit
@@ -26,3 +26,5 @@
 [credential "https://gist.github.com"]
 	helper =
 	helper = !/opt/homebrew/bin/gh auth git-credential
+[pull]
+	rebase = true
