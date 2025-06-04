@@ -62,8 +62,16 @@ fi
 # bun
 export PATH="$HOME/.bun/bin:$PATH"
 
-# Added by Windsurf - Next
-export PATH="$HOME/.codeium/windsurf/bin:$PATH"
+# bun completions
+[ -s "/Users/davm/.bun/_bun" ] && source "/Users/davm/.bun/_bun"
 
 # add UV to path
 export PATH="$HOME/.local/bin:$PATH"
+
+# Added by Windsurf
+export PATH="/Users/davm/.codeium/windsurf/bin:$PATH"
+
+# escript asdf
+for escripts_dir in $(find "${ASDF_DATA_DIR:-$HOME/.asdf}/installs/elixir" -type d -name "escripts" 2>/dev/null); do
+  export PATH="$escripts_dir:$PATH"
+done
