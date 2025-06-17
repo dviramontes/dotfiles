@@ -38,10 +38,13 @@ Thumbs.db
 *.tar
 *.zip
 
-# Platforms & language servers
+# Platforms,
+# language servers 
+# and LLMs
 .java-version
 .elixir_ls
 .qodo
 .aider*
 .windsurfrules
 .cursor
+.claude
