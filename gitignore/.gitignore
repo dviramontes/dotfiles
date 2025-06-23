@@ -39,7 +39,7 @@ Thumbs.db
 *.zip
 
 # Platforms,
-# language servers 
+# language servers
 # and LLMs
 .java-version
 .elixir_ls
@@ -48,3 +48,4 @@ Thumbs.db
 .windsurfrules
 .cursor
 .claude
+CLAUDE.md
