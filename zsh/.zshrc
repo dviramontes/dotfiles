@@ -22,7 +22,7 @@ source ~/.secrets.sh
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.asdf/shims:$PATH"
 export PATH="/usr/local/opt/rustup/bin:$PATH"
-    
+
 ## go
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
