@@ -37,6 +37,10 @@ setopt appendhistory
 ## asdf
 if [[ "$ARCH" == "arm64" ]]; then
     . /opt/homebrew/opt/asdf/libexec/asdf.sh
+    # asdf completions
+    fpath=(${ASDF_DIR}/completions $fpath)
+    autoload -Uz compinit && compinit
+    export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 else
     . /usr/local/opt/asdf/libexec/asdf.sh
 fi

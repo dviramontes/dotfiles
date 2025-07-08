@@ -25,7 +25,7 @@ brew "libtool"
 brew "neovim"
 brew "nvm"
 brew "ollama"
-brew "postgresql@17", restart_service: :changed, link: true
+brew "postgresql@16", restart_service: :changed, link: true
 brew "protobuf"
 brew "ripgrep"
 brew "rustup"
@@ -62,3 +62,4 @@ brew "cursor"
 brew "helix"
 brew "action-validator"
 brew "ngrok"
+brew "terraform"
