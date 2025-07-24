@@ -17,6 +17,7 @@ eval "$(direnv hook zsh)"
 # load externals
 source ~/.alias.sh
 source ~/.secrets.sh
+source ~/.functions.sh
 
 # paths
 export PATH=$HOME/bin:/usr/local/bin:$PATH
