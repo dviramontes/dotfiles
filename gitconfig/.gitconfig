@@ -28,3 +28,5 @@
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [push]
 	default = simple
+[rerere]
+	enabled = true
