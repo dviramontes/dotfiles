@@ -9,6 +9,7 @@ alias ls="lsd"
 # Editor
 alias i="idea"
 alias vim="nvim"
+alias vi="nvim"
 alias lg="lazygit"
 alias ld="lazydocker"
 alias wf="windsurf"

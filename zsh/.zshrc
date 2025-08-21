@@ -14,6 +14,10 @@ ARCH=$(uname -m)
 # direnv
 eval "$(direnv hook zsh)"
 
+# git visual editor
+export EDITOR=nvim
+export VISUAL=nvim
+
 # load externals
 source ~/.alias.sh
 source ~/.secrets.sh
