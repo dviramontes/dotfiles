@@ -18,6 +18,10 @@ eval "$(direnv hook zsh)"
 export EDITOR=nvim
 export VISUAL=nvim
 
+# nvim
+export VIMCONF=$HOME/.config/nvim
+export VIMDATA=$HOME/.local/share/nvim
+
 # load externals
 source ~/.alias.sh
 source ~/.secrets.sh
