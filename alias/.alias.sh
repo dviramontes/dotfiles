@@ -44,3 +44,6 @@ alias kns="kubens"
 alias kcd="kubectx"
 alias kns="kubens"
 alias tf="terraform"
+
+# LLMs and MCPs
+alias claude-dev="NODE_TLS_REJECT_UNAUTHORIZED=0 claude"
