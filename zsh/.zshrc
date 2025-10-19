@@ -88,3 +88,6 @@ export PATH="/Users/davm/.codeium/windsurf/bin:$PATH"
 for escripts_dir in $(find "${ASDF_DATA_DIR:-$HOME/.asdf}/installs/elixir" -type d -name "escripts" 2>/dev/null); do
   export PATH="$escripts_dir:$PATH"
 done
+
+# Zig development version
+export PATH="$HOME/zig-dev/zig-aarch64-macos-0.16.0-dev.172+a11dfaf61:$PATH"
