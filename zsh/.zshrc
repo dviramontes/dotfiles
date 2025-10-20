@@ -89,5 +89,5 @@ for escripts_dir in $(find "${ASDF_DATA_DIR:-$HOME/.asdf}/installs/elixir" -type
   export PATH="$escripts_dir:$PATH"
 done
 
-# Zig development version
-export PATH="$HOME/zig-dev/zig-aarch64-macos-0.16.0-dev.172+a11dfaf61:$PATH"
+# Add ZVM to path
+export PATH="$HOME/.zvm/bin:$PATH"
