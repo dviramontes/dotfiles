@@ -66,4 +66,4 @@ brew "terraform"
 brew "1password-cli"
 brew "deno"
 brew "git-delta"
-
+brew "ast-grep"
