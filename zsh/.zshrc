@@ -1,7 +1,13 @@
+# Enable profiling - uncomment to profile startup time
+# zmodload zsh/zprof
+
 # https://github.com/ohmyzsh/ohmyzsh/wiki/themes
 ZSH_THEME="afowler"
 
 plugins=(git asdf)
+
+# Skip compaudit check for faster startup
+ZSH_DISABLE_COMPFIX=true
 
 # load ohmyzsh
 source "$HOME/.oh-my-zsh/oh-my-zsh.sh"
@@ -61,16 +67,24 @@ else
     . /usr/local/etc/profile.d/z.sh
 fi
 
-# nvm
-if [[ "$ARCH" == "arm64" ]]; then
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"
-    [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-else
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
-    [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-fi
+# nvm - lazy loading for faster shell startup
+export NVM_DIR="$HOME/.nvm"
+# Lazy load nvm - it will be loaded only when you first call 'nvm', 'node', or 'npm'
+nvm() {
+    unset -f nvm node npm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+    nvm "$@"
+}
+node() {
+    unset -f nvm node npm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+    node "$@"
+}
+npm() {
+    unset -f nvm node npm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+    npm "$@"
+}
 
 # bun
 export PATH="$HOME/.bun/bin:$PATH"
@@ -84,10 +98,13 @@ export PATH="$HOME/.local/bin:$PATH"
 # Added by Windsurf
 export PATH="/Users/davm/.codeium/windsurf/bin:$PATH"
 
-# escript asdf
-for escripts_dir in $(find "${ASDF_DATA_DIR:-$HOME/.asdf}/installs/elixir" -type d -name "escripts" 2>/dev/null); do
-  export PATH="$escripts_dir:$PATH"
-done
+# escript asdf - lazy approach to avoid slow find on every startup
+# Only add if elixir is installed via asdf
+if [ -d "${ASDF_DATA_DIR:-$HOME/.asdf}/installs/elixir" ]; then
+  for escripts_dir in $(find "${ASDF_DATA_DIR:-$HOME/.asdf}/installs/elixir" -maxdepth 3 -type d -name "escripts" 2>/dev/null); do
+    export PATH="$escripts_dir:$PATH"
+  done
+fi
 
 # Add ZVM to path
 export PATH="$HOME/.zvm/bin:$PATH"
