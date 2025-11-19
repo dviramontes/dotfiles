@@ -69,6 +69,17 @@ fi
 
 # nvm - lazy loading for faster shell startup
 export NVM_DIR="$HOME/.nvm"
+
+# Add default node version to PATH immediately (so global packages work)
+# This finds the actual installed version to use without loading all of NVM
+if [ -d "$NVM_DIR/versions/node" ]; then
+    # Use the latest installed version (sorted naturally)
+    NVM_DEFAULT_NODE_VERSION=$(/bin/ls -1 "$NVM_DIR/versions/node" | sort -V | tail -1)
+    if [ -n "$NVM_DEFAULT_NODE_VERSION" ]; then
+        export PATH="$NVM_DIR/versions/node/$NVM_DEFAULT_NODE_VERSION/bin:$PATH"
+    fi
+fi
+
 # Lazy load nvm - it will be loaded only when you first call 'nvm', 'node', or 'npm'
 nvm() {
     unset -f nvm node npm
