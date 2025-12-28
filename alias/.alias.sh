@@ -48,3 +48,4 @@ alias tf="terraform"
 # LLMs and MCPs
 alias claude-dev="NODE_TLS_REJECT_UNAUTHORIZED=0 claude"
 alias oc="opencode"
+alias cc="claude-dev mcp list && claude-dev"
