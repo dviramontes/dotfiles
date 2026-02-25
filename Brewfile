@@ -69,3 +69,5 @@ brew "git-delta"
 brew "ast-grep"
 brew "opencode"
 brew "nikitabobko/tap/aerospace"
+brew "mise"
+
