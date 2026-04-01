@@ -34,16 +34,20 @@ alias app_reset="mix ecto.reset && mix seed && phx"
 # Misc
 alias ll="ls -lh"
 alias ..="cd .."
+alias wt="pre"
 
 # fzf find
 alias zz='idea $(fzf -m --preview="bat --color=always {}")'
 
 # k8s and infra
-alias k="kubectl"
 alias kns="kubens"
 alias kcd="kubectx"
 alias kns="kubens"
 alias tf="terraform"
+alias k="kubectl"
+alias t="task"
+alias tl="task --list-all"
+alias dev="devbox"
 
 # LLMs and MCPs
 alias claude-dev="NODE_TLS_REJECT_UNAUTHORIZED=0 claude"

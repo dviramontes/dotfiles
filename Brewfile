@@ -70,4 +70,4 @@ brew "ast-grep"
 brew "opencode"
 brew "nikitabobko/tap/aerospace"
 brew "mise"
-
+cask "derailed/k9s/k9s"
