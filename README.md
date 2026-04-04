@@ -52,11 +52,12 @@ GNU Stow creates symlinks from your dotfiles repository to your home directory. 
    ```bash
    stow --target=$HOME zsh
    stow --target=$HOME alias
-   stow --target=$HOME gitconfig
-   stow --target=$HOME gitignore
-   stow --target=$HOME stow-global-ignore
-   ...
-   ```
+stow --target=$HOME gitconfig
+stow --target=$HOME gitignore
+stow --target=$HOME stow-global-ignore
+stow --target=$HOME pgcli
+...
+```
 
    This will create a symlink `~/.zshrc` that points to `dotfiles/zsh/.zshrc`.
 
