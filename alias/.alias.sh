@@ -12,6 +12,7 @@ alias vim="nvim"
 alias vi="nvim"
 alias lg="lazygit"
 alias ld="lazydocker"
+alias lj="lazyjournal"
 alias wf="windsurf"
 alias cr="cr"
 
