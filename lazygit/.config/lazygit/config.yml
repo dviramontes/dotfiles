@@ -1,0 +1,13 @@
+customCommands:
+    - key: "<c-a>" # ctrl + a
+      description: "pick AI commit"
+      command: 'git commit -m "{{.Form.Msg}}"'
+      context: "files"
+      prompts:
+      - type: "menuFromCommand"
+        title: "ai Commits"
+        key: "Msg"
+        command: "sh -c 'git diff --cached | llm -c \"Generate 3 concise git commit messages as a numbered list in this exact format: 1. message\"'"
+        filter: '^(?P<number>\d+)\.\s(?P<message>.+)$'
+        valueFormat: "{{ .message }}"
+        labelFormat: "{{ .number }}: {{ .message | green }}"
