@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Local shell config template.
+# Copy to ~/.config.sh and customize on each machine.
+
+export PRE_BASE="${HOME}/local/work/"

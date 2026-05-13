@@ -8,6 +8,7 @@
 	excludesfile = /Users/dv/.gitignore
 	pager = delta
 	hooksPath = /Users/davm/.githooks
+	autocrlf = false
 [alias]
 	co = checkout
 	cm = commit
@@ -39,3 +40,4 @@
 	dark = true      # or light = true, or omit for auto-detection
 [merge]
 	conflictStyle = zdiff3
+	renormalize = true

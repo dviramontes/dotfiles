@@ -31,12 +31,34 @@ export VIMDATA=$HOME/.local/share/nvim
 # load externals
 source ~/.alias.sh
 source ~/.secrets.sh
+[ -f ~/.config.sh ] && source ~/.config.sh
 source ~/.functions.sh
 
 # paths
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$HOME/.asdf/shims:$PATH"
-export PATH="/usr/local/opt/rustup/bin:$PATH"
+if command -v rustup >/dev/null 2>&1; then
+    RUSTUP_CARGO_BIN="$(rustup which cargo 2>/dev/null)"
+    if [ -n "$RUSTUP_CARGO_BIN" ]; then
+        export PATH="${RUSTUP_CARGO_BIN%/cargo}:$PATH"
+    fi
+fi
+
+# ensure core system commands are always reachable (e.g. dirname)
+for system_path in /usr/bin /bin /usr/sbin /sbin; do
+    case ":$PATH:" in
+        *":$system_path:"*) ;;
+        *) PATH="$system_path:$PATH" ;;
+    esac
+done
+
+# Warp's shell hook can call dirname even when PATH is temporarily altered.
+# Keep dirname resolvable in Warp by using an absolute-path shim.
+if [ "${TERM_PROGRAM:-}" = "WarpTerminal" ] && [ -x /usr/bin/dirname ]; then
+    dirname() {
+        /usr/bin/dirname "$@"
+    }
+fi
 
 ## go
 export GOPATH=$HOME/go
@@ -119,3 +141,11 @@ fi
 
 # Add ZVM to path
 export PATH="$HOME/.zvm/bin:$PATH"
+
+# completions
+if command -v task >/dev/null 2>&1; then
+    eval "$(task --completion zsh)"
+fi
+
+# lazygit config home
+export XDG_CONFIG_HOME="$HOME/.config"
