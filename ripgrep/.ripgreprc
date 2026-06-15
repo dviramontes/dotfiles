@@ -1,0 +1,3 @@
+# rg already searches the current working directory (.) by default.
+# This keeps parent-directory ignore files from affecting results here.
+--no-ignore-parent
