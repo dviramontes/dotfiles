@@ -49,9 +49,9 @@ GNU Stow creates symlinks from your dotfiles repository to your home directory. 
    ```
 
 2. From your dotfiles directory, run:
-   ```bash
-   stow --target=$HOME zsh
-   stow --target=$HOME alias
+```bash
+stow --target=$HOME zsh
+stow --target=$HOME alias
 stow --target=$HOME gitconfig
 stow --target=$HOME gitignore
 stow --target=$HOME stow-global-ignore
