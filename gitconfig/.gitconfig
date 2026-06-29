@@ -5,7 +5,7 @@
 	ui = true
 [core]
 	editor = vim
-	excludesfile = /Users/dv/.gitignore
+	excludesfile = /Users/davm/.gitignore
 	pager = delta
 	hooksPath = /Users/davm/.githooks
 	autocrlf = false
