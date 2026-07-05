@@ -153,3 +153,11 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # mise
 export PATH="$HOME/.local/share/mise/bin:$PATH"
 eval "$(mise activate zsh)"
+
+# cargo bin
+if [ -d "$HOME/.cargo/bin" ]; then
+    case ":$PATH:" in
+        *":$HOME/.cargo/bin:"*) ;;
+        *) export PATH="$HOME/.cargo/bin:$PATH" ;;
+    esac
+fi
