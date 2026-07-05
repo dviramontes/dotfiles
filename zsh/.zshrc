@@ -149,3 +149,7 @@ fi
 
 # lazygit config home
 export XDG_CONFIG_HOME="$HOME/.config"
+
+# mise
+export PATH="$HOME/.local/share/mise/bin:$PATH"
+eval "$(mise activate zsh)"
