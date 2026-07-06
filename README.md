@@ -54,6 +54,7 @@ stow --target=$HOME zsh
 stow --target=$HOME alias
 stow --target=$HOME gitconfig
 stow --target=$HOME gitignore
+stow --target=$HOME ghostty
 stow --target=$HOME stow-global-ignore
 stow --target=$HOME pgcli
 ...
