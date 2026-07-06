@@ -22,7 +22,7 @@ brew "libtool"
 brew "neovim"
 brew "ollama"
 brew "odinfmt"
-brew "postgresql@17", restart_service: :changed, link: true
+brew "postgresql@18", restart_service: :changed, link: true
 brew "ripgrep"
 brew "rustup"
 brew "shellcheck"
