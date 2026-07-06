@@ -1,3 +1,4 @@
 [tools]
 elixir = { version = "latest", install_env = { MIX_HOME = "~/.mix" } }
 erlang = "latest"
+helix = "latest"
