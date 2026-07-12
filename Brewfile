@@ -59,4 +59,6 @@ brew "mise"
 cask "codex"
 brew "lsd"
 brew "ampcode/tap/ampcode"
+cask "cleanshot"
+
 
