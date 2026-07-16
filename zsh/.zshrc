@@ -161,3 +161,4 @@ if [ -d "$HOME/.cargo/bin" ]; then
         *) export PATH="$HOME/.cargo/bin:$PATH" ;;
     esac
 fi
+export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
