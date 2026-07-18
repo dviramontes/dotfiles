@@ -162,3 +162,6 @@ if [ -d "$HOME/.cargo/bin" ]; then
     esac
 fi
 export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
+
+# atuin
+eval "$(atuin init zsh)"
