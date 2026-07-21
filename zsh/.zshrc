@@ -12,6 +12,31 @@ ZSH_DISABLE_COMPFIX=true
 # load ohmyzsh
 source "$HOME/.oh-my-zsh/oh-my-zsh.sh"
 
+# Compact prompt: current directory and Git branch/status.
+autoload -Uz vcs_info
+setopt prompt_subst
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr '+'
+zstyle ':vcs_info:git:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' formats ' %F{yellow}[%b%c%u]%f'
+zstyle ':vcs_info:git:*' actionformats ' %F{yellow}[%b|%a%c%u]%f'
+
+git_ahead_behind() {
+    local ahead behind
+    GIT_SYNC=''
+    read -r ahead behind <<< "$(command git rev-list --left-right --count HEAD...@{upstream} 2>/dev/null)"
+    (( ahead > 0 )) && GIT_SYNC+=" %F{green}↑${ahead}%f"
+    (( behind > 0 )) && GIT_SYNC+=" %F{red}↓${behind}%f"
+}
+
+prompt_remote_host() {
+    PROMPT_HOST=''
+    [[ -n "$SSH_CONNECTION" ]] && PROMPT_HOST='%F{red}%m%f '
+}
+
+precmd_functions+=(vcs_info git_ahead_behind prompt_remote_host)
+[[ -o interactive ]] && PS1='%F{242}%D{%H:%M}%f ${PROMPT_HOST}%F{cyan}%1~%f${vcs_info_msg_0_}${GIT_SYNC} %# '
+
 ARCH=$(uname -m)
 
 # fzf
@@ -162,6 +187,3 @@ if [ -d "$HOME/.cargo/bin" ]; then
     esac
 fi
 export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"
-
-# atuin
-eval "$(atuin init zsh)"
