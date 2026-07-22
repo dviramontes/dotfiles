@@ -59,3 +59,4 @@ brew "mise"
 cask "codex"
 brew "lsd"
 cask "cleanshot"
+brew 'herdr'
