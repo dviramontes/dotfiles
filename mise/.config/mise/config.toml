@@ -1,5 +1,4 @@
 [tools]
-amp = "latest"
 atuin = "latest"
 elixir = { version = "latest", install_env = { MIX_HOME = "~/.mix" } }
 erlang = "latest"
