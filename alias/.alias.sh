@@ -31,7 +31,7 @@ alias mem="mix ecto.migrate"
 alias mer="mix ecto.rollback"
 alias phx="iex -S mix phx.server"
 alias app_reset="mix ecto.reset && mix seed && phx"
-alias app_start="mdg && mcc && phx"
+alias appstart="mdg && mcc && phx"
 
 # Misc
 alias ll="ls -lh"
