@@ -1,18 +1,14 @@
-# Enable profiling - uncomment to profile startup time
-# zmodload zsh/zprof
+# Enable profiling: zmodload zsh/zprof  (then run: zprof)
 
-# https://github.com/ohmyzsh/ohmyzsh/wiki/themes
-ZSH_THEME="afowler"
-
-plugins=(git asdf)
-
-# Skip compaudit check for faster startup
+# Oh My Zsh — theme unused (custom prompt below); skip update checks
+ZSH_THEME=""
+zstyle ':omz:update' mode disabled
+# git aliases from OMZ; skip asdf plugin (forces broken shims ahead of mise/nvm)
+plugins=(git)
 ZSH_DISABLE_COMPFIX=true
-
-# load ohmyzsh
 source "$HOME/.oh-my-zsh/oh-my-zsh.sh"
 
-# Compact prompt: current directory and Git branch/status.
+# Compact prompt: cwd + git branch/status (+ ahead/behind)
 autoload -Uz vcs_info
 setopt prompt_subst
 zstyle ':vcs_info:git:*' check-for-changes true
@@ -24,6 +20,7 @@ zstyle ':vcs_info:git:*' actionformats ' %F{yellow}[%b|%a%c%u]%f'
 git_ahead_behind() {
     local ahead behind
     GIT_SYNC=''
+    [[ -n ${vcs_info_msg_0_} ]] || return
     read -r ahead behind <<< "$(command git rev-list --left-right --count HEAD...@{upstream} 2>/dev/null)"
     (( ahead > 0 )) && GIT_SYNC+=" %F{green}↑${ahead}%f"
     (( behind > 0 )) && GIT_SYNC+=" %F{red}↓${behind}%f"
@@ -31,159 +28,119 @@ git_ahead_behind() {
 
 prompt_remote_host() {
     PROMPT_HOST=''
-    [[ -n "$SSH_CONNECTION" ]] && PROMPT_HOST='%F{red}%m%f '
+    [[ -n $SSH_CONNECTION ]] && PROMPT_HOST='%F{red}%m%f '
 }
 
 precmd_functions+=(vcs_info git_ahead_behind prompt_remote_host)
 [[ -o interactive ]] && PS1='%F{242}%D{%H:%M}%f ${PROMPT_HOST}%F{cyan}%1~%f${vcs_info_msg_0_}${GIT_SYNC} %# '
 
-ARCH=$(uname -m)
-
-# fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf (optional)
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
 # direnv
-eval "$(direnv hook zsh)"
+(( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
-# git visual editor
+# Editor / nvim paths
 export EDITOR=nvim
 export VISUAL=nvim
-
-# nvim
 export VIMCONF=$HOME/.config/nvim
 export VIMDATA=$HOME/.local/share/nvim
+export XDG_CONFIG_HOME="$HOME/.config"
 
-# load externals
+# User shell fragments
 source ~/.alias.sh
-source ~/.secrets.sh
-[ -f ~/.config.sh ] && source ~/.config.sh
+[[ -f ~/.secrets.sh ]] && source ~/.secrets.sh
+[[ -f ~/.config.sh ]] && source ~/.config.sh
 source ~/.functions.sh
 
-# paths
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH="$HOME/.asdf/shims:$PATH"
-if command -v rustup >/dev/null 2>&1; then
-    RUSTUP_CARGO_BIN="$(rustup which cargo 2>/dev/null)"
-    if [ -n "$RUSTUP_CARGO_BIN" ]; then
-        export PATH="${RUSTUP_CARGO_BIN%/cargo}:$PATH"
-    fi
+# --- PATH ---
+typeset -U path PATH
+
+path=(
+  $HOME/bin
+  $HOME/.local/bin
+  $HOME/.zvm/bin
+  $HOME/.codeium/windsurf/bin
+  $HOME/go/bin
+  $path
+)
+
+# Rust: avoid `rustup which` subprocess
+if [[ -d $HOME/.cargo/bin ]]; then
+  path=($HOME/.cargo/bin $path)
+elif [[ -x $HOME/.rustup/toolchains/stable-aarch64-apple-darwin/bin/cargo ]]; then
+  path=($HOME/.rustup/toolchains/stable-aarch64-apple-darwin/bin $path)
 fi
 
-# ensure core system commands are always reachable (e.g. dirname)
-for system_path in /usr/bin /bin /usr/sbin /sbin; do
-    case ":$PATH:" in
-        *":$system_path:"*) ;;
-        *) PATH="$system_path:$PATH" ;;
-    esac
+# asdf CLI is a brew binary (0.20+). Keep shims available but NOT ahead of mise.
+# Tools without a version in .tool-versions will miss via shim — prefer mise/nvm.
+[[ -d $HOME/.asdf/shims ]] && path+=($HOME/.asdf/shims)
+
+# Homebrew extras (arm64)
+if [[ $(uname -m) == arm64 ]]; then
+  path=(/opt/homebrew/opt/libpq/bin /opt/homebrew/opt/postgresql@18/bin $path)
+  [[ -f /opt/homebrew/etc/profile.d/z.sh ]] && source /opt/homebrew/etc/profile.d/z.sh
+else
+  [[ -f /usr/local/etc/profile.d/z.sh ]] && source /usr/local/etc/profile.d/z.sh
+fi
+
+# Ensure core system commands remain reachable without shadowing brew/user bins
+for _sys in /usr/bin /bin /usr/sbin /sbin; do
+  (( path[(Ie)$_sys] )) || path+=($_sys)
 done
+unset _sys
 
-# Warp's shell hook can call dirname even when PATH is temporarily altered.
-# Keep dirname resolvable in Warp by using an absolute-path shim.
-if [ "${TERM_PROGRAM:-}" = "WarpTerminal" ] && [ -x /usr/bin/dirname ]; then
-    dirname() {
-        /usr/bin/dirname "$@"
-    }
+# Warp: absolute dirname so hooks work if PATH is temporarily altered
+if [[ ${TERM_PROGRAM:-} == WarpTerminal && -x /usr/bin/dirname ]]; then
+  dirname() { /usr/bin/dirname "$@"; }
 fi
 
-## go
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
-export PATH=$PATH:$GOBIN
 
-# history config
+# History
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory
 
-## asdf
-if [[ "$ARCH" == "arm64" ]]; then
-    . /opt/homebrew/opt/asdf/libexec/asdf.sh
-    # asdf completions
-    fpath=(${ASDF_DIR}/completions $fpath)
-    autoload -Uz compinit && compinit
-    export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-else
-    . /usr/local/opt/asdf/libexec/asdf.sh
-fi
-
-# z
-if [[ "$ARCH" == "arm64" ]]; then
-    . /opt/homebrew/etc/profile.d/z.sh
-else
-    . /usr/local/etc/profile.d/z.sh
-fi
-
-# nvm - lazy loading for faster shell startup
+# nvm — PATH fallback for node when mise doesn't provide it; lazy-load nvm CLI only
 export NVM_DIR="$HOME/.nvm"
-
-# Add default node version to PATH immediately (so global packages work)
-# This finds the actual installed version to use without loading all of NVM
-if [ -d "$NVM_DIR/versions/node" ]; then
-    # Use the latest installed version (sorted naturally)
-    NVM_DEFAULT_NODE_VERSION=$(/bin/ls -1 "$NVM_DIR/versions/node" | sort -V | tail -1)
-    if [ -n "$NVM_DEFAULT_NODE_VERSION" ]; then
-        export PATH="$NVM_DIR/versions/node/$NVM_DEFAULT_NODE_VERSION/bin:$PATH"
-    fi
+if [[ -d $NVM_DIR/versions/node ]]; then
+  local_nvm_ver=$(/bin/ls -1 "$NVM_DIR/versions/node" | sort -V | tail -1)
+  [[ -n $local_nvm_ver ]] && path=($NVM_DIR/versions/node/$local_nvm_ver/bin $path)
 fi
-
-# Lazy load nvm - it will be loaded only when you first call 'nvm', 'node', or 'npm'
 nvm() {
-    unset -f nvm node npm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-    nvm "$@"
-}
-node() {
-    unset -f nvm node npm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-    node "$@"
-}
-npm() {
-    unset -f nvm node npm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-    npm "$@"
+  unfunction nvm 2>/dev/null
+  [[ -s $NVM_DIR/nvm.sh ]] && . $NVM_DIR/nvm.sh
+  nvm "$@"
 }
 
-# bun
-export PATH="$HOME/.bun/bin:$PATH"
+# Elixir escripts — static paths (no find on every startup)
+_elixir_escripts=(
+  ${ASDF_DATA_DIR:-$HOME/.asdf}/installs/elixir/1.18.2-otp-27/.mix/escripts
+  ${ASDF_DATA_DIR:-$HOME/.asdf}/installs/elixir/1.18.2/.mix/escripts
+  $HOME/.mix/escripts
+)
+for _d in $_elixir_escripts; do
+  [[ -d $_d ]] && path=($_d $path)
+done
+unset _d _elixir_escripts
 
-# bun completions
-[ -s "/Users/davm/.bun/_bun" ] && source "/Users/davm/.bun/_bun"
+# task completion — lazy
+task() {
+  unfunction task 2>/dev/null
+  if (( $+commands[task] )) && [[ -o interactive ]]; then
+    eval "$(command task --completion zsh 2>/dev/null)"
+  fi
+  command task "$@"
+}
 
-# add UV to path
-export PATH="$HOME/.local/bin:$PATH"
-
-# Added by Windsurf
-export PATH="/Users/davm/.codeium/windsurf/bin:$PATH"
-
-# escript asdf - lazy approach to avoid slow find on every startup
-# Only add if elixir is installed via asdf
-if [ -d "${ASDF_DATA_DIR:-$HOME/.asdf}/installs/elixir" ]; then
-  for escripts_dir in $(find "${ASDF_DATA_DIR:-$HOME/.asdf}/installs/elixir" -maxdepth 3 -type d -name "escripts" 2>/dev/null); do
-    export PATH="$escripts_dir:$PATH"
-  done
+# mise — primary version manager (per-directory tools via chpwd hook)
+# Faster alternative without directory hooks: eval "$(mise activate zsh --shims)"
+if (( $+commands[mise] )); then
+  eval "$(mise activate zsh)"
+elif [[ -x $HOME/.local/share/mise/bin/mise ]]; then
+  path=($HOME/.local/share/mise/bin $path)
+  eval "$(mise activate zsh)"
 fi
-
-# Add ZVM to path
-export PATH="$HOME/.zvm/bin:$PATH"
-
-# completions
-if command -v task >/dev/null 2>&1; then
-    eval "$(task --completion zsh)"
-fi
-
-# lazygit config home
-export XDG_CONFIG_HOME="$HOME/.config"
-
-# mise
-export PATH="$HOME/.local/share/mise/bin:$PATH"
-eval "$(mise activate zsh)"
-
-# cargo bin
-if [ -d "$HOME/.cargo/bin" ]; then
-    case ":$PATH:" in
-        *":$HOME/.cargo/bin:"*) ;;
-        *) export PATH="$HOME/.cargo/bin:$PATH" ;;
-    esac
-fi
-export PATH="/opt/homebrew/opt/postgresql@18/bin:$PATH"

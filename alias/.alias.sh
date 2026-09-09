@@ -52,6 +52,7 @@ alias tl="task --list-all"
 alias dev="devbox"
 
 # LLMs and MCPs
+alias pi='NODE_EXTRA_CA_CERTS="$HOME/.pi/agent/extensions/tidewave/groupcollect-local.crt" pi'
 alias claude-dev="NODE_TLS_REJECT_UNAUTHORIZED=0 claude"
 alias opencode-dev="NODE_TLS_REJECT_UNAUTHORIZED=0 opencode"
 alias droid-dev="NODE_TLS_REJECT_UNAUTHORIZED=0 droid"

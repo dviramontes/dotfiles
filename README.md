@@ -58,6 +58,8 @@ stow --target=$HOME ghostty
 stow --target=$HOME hunk
 stow --target=$HOME stow-global-ignore
 stow --target=$HOME pgcli
+stow --target=$HOME nvim
+stow --target=$HOME lazygit
 ...
 ```
 
