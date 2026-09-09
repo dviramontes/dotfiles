@@ -136,11 +136,10 @@ task() {
   command task "$@"
 }
 
-# mise — primary version manager (per-directory tools via chpwd hook)
-# Faster alternative without directory hooks: eval "$(mise activate zsh --shims)"
+# mise — shims avoid per-directory hooks for faster startup
 if (( $+commands[mise] )); then
-  eval "$(mise activate zsh)"
+  eval "$(mise activate zsh --shims)"
 elif [[ -x $HOME/.local/share/mise/bin/mise ]]; then
   path=($HOME/.local/share/mise/bin $path)
-  eval "$(mise activate zsh)"
+  eval "$(mise activate zsh --shims)"
 fi
