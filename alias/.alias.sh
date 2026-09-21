@@ -7,7 +7,7 @@ alias cat="bat --paging=never"
 alias ls="lsd"
 
 # Editor
-alias i="idea"
+alias ide='direnv exec . "$HOME/Applications/IntelliJ IDEA.app/Contents/MacOS/idea" .'
 alias vim="nvim"
 alias vi="nvim"
 alias lg="lazygit"
