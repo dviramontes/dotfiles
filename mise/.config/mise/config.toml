@@ -5,4 +5,5 @@ elixir = { version = "latest", install_env = { MIX_HOME = "~/.mix" } }
 erlang = "latest"
 helix = "latest"
 lazyssh = "latest"
+node = "25.2.1"
 superhtml = "latest"
