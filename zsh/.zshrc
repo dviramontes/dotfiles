@@ -8,31 +8,17 @@ plugins=(git)
 ZSH_DISABLE_COMPFIX=true
 source "$HOME/.oh-my-zsh/oh-my-zsh.sh"
 
-# Compact prompt: cwd + git branch/status (+ ahead/behind)
-autoload -Uz vcs_info
+# Compact prompt without per-prompt Git queries.
 setopt prompt_subst
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr '+'
-zstyle ':vcs_info:git:*' unstagedstr '*'
-zstyle ':vcs_info:git:*' formats ' %F{yellow}[%b%c%u]%f'
-zstyle ':vcs_info:git:*' actionformats ' %F{yellow}[%b|%a%c%u]%f'
-
-git_ahead_behind() {
-    local ahead behind
-    GIT_SYNC=''
-    [[ -n ${vcs_info_msg_0_} ]] || return
-    read -r ahead behind <<< "$(command git rev-list --left-right --count HEAD...@{upstream} 2>/dev/null)"
-    (( ahead > 0 )) && GIT_SYNC+=" %F{green}↑${ahead}%f"
-    (( behind > 0 )) && GIT_SYNC+=" %F{red}↓${behind}%f"
-}
-
-prompt_remote_host() {
-    PROMPT_HOST=''
-    [[ -n $SSH_CONNECTION ]] && PROMPT_HOST='%F{red}%m%f '
-}
-
-precmd_functions+=(vcs_info git_ahead_behind prompt_remote_host)
-[[ -o interactive ]] && PS1='%F{242}%D{%H:%M}%f ${PROMPT_HOST}%F{cyan}%1~%f${vcs_info_msg_0_}${GIT_SYNC} %# '
+PROMPT_HOST=''
+[[ -n $SSH_CONNECTION ]] && PROMPT_HOST='%F{red}%m%f '
+if [[ -o interactive ]]; then
+    if [[ ${TERM_PROGRAM:-} == ghostty ]]; then
+        PS1='%F{242}%D{%H:%M}%f ${PROMPT_HOST}%F{cyan}%~%f %# '
+    else
+        PS1='%F{242}%D{%H:%M}%f ${PROMPT_HOST}%F{cyan}%1~%f %# '
+    fi
+fi
 
 # fzf (optional)
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
@@ -77,7 +63,7 @@ fi
 [[ -d $HOME/.asdf/shims ]] && path+=($HOME/.asdf/shims)
 
 # Homebrew extras (arm64)
-if [[ $(uname -m) == arm64 ]]; then
+if [[ $CPUTYPE == arm64 ]]; then
   path=(/opt/homebrew/opt/libpq/bin /opt/homebrew/opt/postgresql@18/bin $path)
   [[ -f /opt/homebrew/etc/profile.d/z.sh ]] && source /opt/homebrew/etc/profile.d/z.sh
 else
@@ -107,8 +93,10 @@ setopt appendhistory
 # nvm — PATH fallback for node when mise doesn't provide it; lazy-load nvm CLI only
 export NVM_DIR="$HOME/.nvm"
 if [[ -d $NVM_DIR/versions/node ]]; then
-  local_nvm_ver=$(/bin/ls -1 "$NVM_DIR/versions/node" | sort -V | tail -1)
+  local_nvm_versions=($NVM_DIR/versions/node/*(N/nOn))
+  local_nvm_ver=${local_nvm_versions[1]:t}
   [[ -n $local_nvm_ver ]] && path=($NVM_DIR/versions/node/$local_nvm_ver/bin $path)
+  unset local_nvm_versions
 fi
 nvm() {
   unfunction nvm 2>/dev/null
@@ -138,8 +126,8 @@ task() {
 
 # mise — shims avoid per-directory hooks for faster startup
 if (( $+commands[mise] )); then
-  eval "$(mise activate zsh --shims)"
+  path=("${MISE_DATA_DIR:-$HOME/.local/share/mise}/shims" $path)
 elif [[ -x $HOME/.local/share/mise/bin/mise ]]; then
   path=($HOME/.local/share/mise/bin $path)
-  eval "$(mise activate zsh --shims)"
+  path=("${MISE_DATA_DIR:-$HOME/.local/share/mise}/shims" $path)
 fi
