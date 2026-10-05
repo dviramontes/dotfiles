@@ -134,3 +134,29 @@ gitcomain() {
 
     git checkout "$latest_commit"
 }
+
+# Update Pi, Homebrew packages, and mise-managed tools.
+update_all() {
+    local brew_pkgs=()
+    local pkg
+
+    pi update || return $?
+    pi update --extensions || return $?
+    brew update || return $?
+
+    # Only upgrade packages that are actually installed (formula or cask).
+    for pkg in codex claude-code@latest claude-code opencode gh hunk; do
+        if brew list --formula "$pkg" >/dev/null 2>&1 ||
+            brew list --cask "$pkg" >/dev/null 2>&1; then
+            brew_pkgs+=("$pkg")
+        fi
+    done
+
+    if ((${#brew_pkgs[@]})); then
+        brew upgrade "${brew_pkgs[@]}" || return $?
+    else
+        printf 'update_all: no matching Homebrew packages installed\n'
+    fi
+
+    mise upgrade
+}

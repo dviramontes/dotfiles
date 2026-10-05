@@ -45,6 +45,7 @@ typeset -U path PATH
 path=(
   $HOME/bin
   $HOME/.local/bin
+  $HOME/.config/emacs/bin
   $HOME/.zvm/bin
   $HOME/.codeium/windsurf/bin
   $HOME/go/bin
