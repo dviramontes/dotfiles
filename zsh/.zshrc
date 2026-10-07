@@ -26,9 +26,9 @@ fi
 # direnv
 (( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
-# Editor / nvim paths
-export EDITOR=nvim
-export VISUAL=nvim
+# Editor
+export EDITOR=hx
+export VISUAL=hx
 export VIMCONF=$HOME/.config/nvim
 export VIMDATA=$HOME/.local/share/nvim
 export XDG_CONFIG_HOME="$HOME/.config"
