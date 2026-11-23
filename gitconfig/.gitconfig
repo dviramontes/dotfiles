@@ -6,7 +6,7 @@
 [core]
 	editor = vim
 	excludesfile = /Users/davm/.gitignore
-	pager = delta
+	pager = hunk pager
 	hooksPath = /Users/davm/.githooks
 	autocrlf = false
 [alias]
@@ -47,3 +47,6 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[pager]
+	diff = hunk pager
+	show = hunk pager
