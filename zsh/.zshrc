@@ -39,9 +39,6 @@ prompt_remote_host() {
 precmd_functions+=(vcs_info git_ahead_behind prompt_remote_host)
 [[ -o interactive ]] && PS1='%F{242}%D{%H:%M}%f ${PROMPT_HOST}%F{cyan}%1~%f${vcs_info_msg_0_}${GIT_SYNC} %# '
 
-# fzf (optional)
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-
 # direnv
 (( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
@@ -162,3 +159,6 @@ elif [[ -x $XDG_DATA_HOME/mise/bin/mise ]]; then
   path=("$XDG_DATA_HOME/mise/bin" $path)
   eval "$(mise activate zsh)"
 fi
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)

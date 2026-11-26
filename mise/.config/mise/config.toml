@@ -1,8 +1,8 @@
 [tools]
-amp = "latest"
 atuin = "latest"
 elixir = { version = "latest", install_env = { MIX_HOME = "~/.mix" } }
 erlang = "28.5.0.8"
+fzf = "latest"
 helix = "latest"
 lazyssh = "latest"
 node = "24.21.0"
